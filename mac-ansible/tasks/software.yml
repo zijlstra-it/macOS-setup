@@ -1,0 +1,88 @@
+---
+- name: Enable Homebrew bundle tap
+  homebrew_tap:
+    name: homebrew/bundle
+  tags:
+    - software
+    - brew
+
+- name: Install mas
+  homebrew:
+    name: mas
+    state: present
+    update_homebrew: yes
+  tags:
+    - software
+    - brew
+
+- name: Check if Brewfile contains updates
+  shell: 'brew bundle check --file="files/Brewfile"'
+  register: bundle_check_result
+  ignore_errors: true
+  tags:
+    - software
+    - brew
+
+- name: Install apps using Brewfile
+  shell: 'brew bundle install --file="files/Brewfile" >> /tmp/mac-ansible.log'
+  when: bundle_check_result.rc != 0
+  tags:
+    - software
+    - brew
+
+- name: Configure services
+  command: "brew services start {{ item }}"
+  loop: "{{ homebrew_services }}"
+  tags:
+    - software
+    - brew
+
+- name: Install NeoVIM & dependencies if not allready installed
+  homebrew:
+    name: "{{ item }}"
+    state: present
+    update_homebrew: no
+  with_items:
+    - neovim
+    - lazygit
+    - ripgrep
+  tags:
+    - software
+    - neovim
+
+- name: Create NeoVIM config dir
+  file:
+    path: "{{ ansible_env.HOME }}/.config/nvim"
+    state: directory
+    mode: "755"
+  tags:
+    - software
+    - neovim
+
+- name: Install the NVchad framework
+  git:
+    repo: "https://github.com/NvChad/NvChad"
+    dest: "{{ ansible_env.HOME }}/.config/nvim"
+    depth: "1"
+    update: "no"
+  tags:
+    - software
+    - neovim
+
+- name: Checkout the custom NVchad directory to {{ git_local_path }}/nvchad-custom
+  git:
+    repo: "{{ neovim_custom_config_repo }}"
+    dest: "{{ git_local_path }}/nvchad-custom"
+    update: "no"
+  tags:
+    - software
+    - neovim
+
+- name: Link {{ ansible_env.HOME }}/.config/nvim/lua/custom to the custom configuration
+  file:
+    src: "{{ git_local_path }}/nvchad-custom"
+    dest: "{{ ansible_env.HOME }}/.config/nvim"
+    state: link
+  tags:
+    - software
+    - neovim

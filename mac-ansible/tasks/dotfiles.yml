@@ -1,0 +1,66 @@
+---
+- name: Check for dotfiles in {{ dotfiles_path }}
+  stat:
+    path: "{{ dotfiles_path }}"
+  register: dotfiles
+  tags:
+    - dotfiles
+
+- name: Check for Cloud files in {{ cloudfiles_path }}
+  stat:
+    path: "{{ cloudfiles_path }}"
+  register: cloudfiles
+  tags:
+    - dotfiles
+
+- name: Ensure dotfiles setup is executable
+  file:
+    path: "{{ dotfiles_path }}/install.sh"
+    mode: "754"
+  when:
+    - dotfiles.stat.exists
+  tags:
+    - dotfiles
+
+- name: Install dotfiles
+  shell: "./install.sh >> ~/tmp/mac-ansible.log"
+  args:
+    chdir: "{{ dotfiles_path }}"
+  when:
+    - dotfiles.stat.exists
+  tags:
+    - dotfiles
+
+- name: Install Cloud dotfiles
+  block:
+    - name: Check for {{ cloudfiles_path }}/{{ item }}
+      stat:
+        path: "{{ cloudfiles_path }}/{{ item | regex_replace('^\\./', '') }}"
+      register: cloud_file
+
+    - name: Check for {{ ansible_env.HOME }}/{{ item }}
+      stat:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+      register: config_file
+
+    - name: Delete {{ ansible_env.HOME }}/{{ item }}
+      file:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: absent
+      when:
+        - config_file.stat.isdir
+
+    - name: Create link to {{ cloudfiles_path }}/{{ item | regex_replace('^\\./', '') }}
+      file:
+        src: "{{ cloudfiles_path }}/{{ item | regex_replace('^\\./', '') }}"
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: link
+      when:
+        - config_file.stat.isdir
+        - cloud_file.stat.exists
+
+  with_items: "{{ cloudfiles_list }}"
+  when:
+    - cloudfiles.stat.exists
+  tags:
+    - dotfiles

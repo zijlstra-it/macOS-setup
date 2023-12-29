@@ -1,0 +1,21 @@
+- name: "Clean Dock"
+  command: 'dockutil --remove all'
+  notify:
+    - kill dock
+
+- name: "Add items to dock"
+  command: "dockutil --add \"{{ item }}.app\""
+  loop: "{{ dock_apps }}"
+  notify:
+    - kill dock
+
+- name: "Add folders to dock"
+  command: "dockutil --add {{ item }} --view list --display folder --section others"
+  loop: "{{ dock_folders }}"
+  notify:
+    - kill dock
+
+- name: "Add Apps folder to dock"
+  command: "dockutil --add /Applications --view grid --display folder --section others"
+  notify:
+    - kill dock

@@ -1,0 +1,47 @@
+---
+- name: Check for git repositories path
+  stat:
+    path: "{{ git_repos_path }}"
+  register: git_dir
+  tags:
+    - git
+
+- name: Clone single repo's to {{ git_repos_path }}
+  block:
+    - name: Set fact
+      set_fact:
+        target_dir: "{{ git_repos_path }}/{{ item.split('/')[-1] }}"
+
+    - name: Create target directory
+      path: "{{ target_dir }}"
+
+    - name: Clone repository
+      git:
+        repo: "{{ item }}.git"
+        dest: "{{ target_dir }}"
+
+  loop: "{{ git_repos }}"
+  when: git_dir.stat.isdir
+  tags:
+    - git
+
+- name: Clone groups of repo's to {{ git_repos_path }}
+  block:
+    - name: Set fact
+      set_fact:
+        group_dir: "{{ git_repos_path }}/{{ item.0.url.split('/')[-2] }}"
+        repo_dir: "{{ item.0.url.split('/')[-1] }}"
+        target_dir: "{{ group_dir }}/{{ repo_dir }}"
+
+    - name: Create target directory
+      path: "{{ target_dir }}"
+
+    - name: Clone repositories from {{ item.0.url }}
+      git:
+        repo: "{{ item.0.url }}/{{ item.1 }}.git"
+        dest: "{{ target_dir }}"
+
+  loop: "{{ git_group_repos | subelements('repos')}}"
+  when: git_dir.stat.isdir
+  tags:
+    - git
