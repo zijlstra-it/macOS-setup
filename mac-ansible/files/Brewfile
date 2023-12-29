@@ -1,0 +1,156 @@
+# Brewfile
+cask_args appdir: '/Applications'
+
+### UNIX DEFAULTS
+brew "binutils"
+brew "coreutils"
+brew "diffutils"
+brew "findutils"
+brew "gawk"
+brew "gnu-indent"
+brew "gnu-sed"
+brew "gnu-tar"
+brew "gnu-which"
+brew "gnupg"
+brew "gnutls"
+brew "grep"
+brew "gzip"
+brew "less"
+brew "lsof"
+brew "make"
+brew "openssh"
+brew "pstree"
+brew "readline"
+brew "rename"
+brew "rsync"
+brew "screen"
+brew "tree"
+brew "watch"
+brew "wget"
+brew "ipcalc"
+brew "ssh-copy-id"
+
+### SHELLS, GIT, PYTHON and RUBY
+brew "git"
+brew "git-extras"                           # Extra commands for convenience
+brew "git-crypt"                            # Enables secretfiles
+
+### PROGRAMMING LANGUAGES
+brew "pyenv"                                # Python version management
+brew "pyenv-virtualenv"                     # For managing virtual envs
+brew "pyenv-ccache"                         # Make Python build faster
+brew "pyenv-which-ext"                      # Integrate pyenv and system commands (looks up commands in other python versions)
+brew "rust"                                 # Safe, concurrent, practical language
+
+### EDITORS
+brew "neovim"                               # Ambitious Vim-fork focused on extensibility and agility
+
+### CLI UTILITIES
+brew "dockutil"                             # Manages the dock icons
+brew "dos2unix"                             # Translate newlines between DOS and UNIX
+brew "doxygen"                              # tmux dependency
+brew "duti"                                 # Set default document and URL handlers
+brew "fasd"                                 # Fasd offers quick access to files and directories
+brew "fping"                                # More usable ping
+brew "htop"                                 # Display system usage
+brew "jq"                                   # Jq for YAML
+brew "k9s"                                  # Kubernetes CLI To Manage Your Clusters In Style!
+brew "kubectl-cli"                          # Kubernetes command-line interface
+brew "kustomize"                            # Template-free customization of Kubernetes YAML manifests
+brew "lnav"                                 # Log viewer
+brew "lunchy"                               # Launchctl util
+brew "mas"                                  # Install software from app store
+brew "nmap"                                 # Network management package
+brew "packer"                               # Create identical machine images for multiple platforms
+brew "shellcheck"                           # Test shell scripts for errors
+brew "tmux"                                 # Terminal multiplexer and server
+brew "trash"                                # To use OS trash instead of rm forever
+brew "tfenv"                                # Terraform version manager inspired by rbenv
+brew "unison"                               # Sync both ways folders
+brew "wdiff"                                # Word by word diff
+brew "yamllint"                             # YAML Linter
+brew "eza"                                  # Modern replacement for 'ls'
+brew "battery"                              # CLI for managing the battery charging status
+
+##### Other #####
+brew "koekeishiya/formulae/skhd"            # Simple hotkey manager
+
+##### CASKS #####
+
+tap "homebrew/cask-drivers"
+tap "homebrew/cask-versions"
+
+## Security Related - Objective See
+cask "taskexplorer"                         # Look at running tasks and their open dylibs, files and network connections
+cask "oversight"                            # Monitor mic and camera to prevent unwarranted access
+cask "reikey"                               # Anti key logger tool
+cask "netiquette"                           # Netork monitor to explore network sockets and connections
+cask "kextviewr"                            # Kernel extension monitor tool
+
+## General
+cask "appcleaner"                           # Removes plist along with the app
+cask "adobe-acrobat-reader"                 # To fill forms only compatible with Adobe Acrobat
+cask "authy"                                # 2FA App
+cask "bitwarden"                            # Password manager of choice
+cask "bluejeans"                            # FB internal Videoconference
+cask "caffeine"                             # Prevents the computer from sleeping
+cask "element"                              # Matrix chat client
+cask "firefox"                              # Alternative web browser
+cask "gpg-suite"                            # GPG Suite
+cask "google-chrome"                        # Google's web browser
+cask "iterm2"                               # Better than Terminal.app
+cask "karabiner-elements"                   # Tool to remap keys like caps-lock
+cask "onyx"                                 # Tweak tool for OS
+cask "spotify"                              # Music streaming
+cask "spotmenu"                             # Spotify in the menu bar
+cask "slack"                                # Slack
+cask "skype"                                # Video calls
+cask "the-unarchiver"                       # To deflate and decompress files
+cask "utm"                                  # Virtual machines UI using QEMU
+cask "veracrypt"                            # Disk and disk image encryption
+cask "visual-studio-code"                   # Visual Studio Code editor
+cask "vlc"                                  # Video Player
+cask "whatsapp"                             # WhatsApp
+cask "xquartz"                              # X11 server
+cask "zoom"                                 # Zoom.us video conference software
+cask "drawio"                               # Draw.io is free online diagram softwar
+cask "logi-options-plus"                    # Software for Logitech devices
+cask "drivedx"                              # Drive health diagnostic & monitoring tool
+
+# Quick Look plugins
+cask "glance"                               # Wide array of code, json, md, tsv,...
+cask "qladdict"                             # SRT files
+cask "qlimagesize"                          # Images
+cask "qlmobi"                               # Mobi ebooks
+cask "qlprettypatch"                        # .patch files
+cask "qlstephen"                            # catch-all for text files like CHANGELOG, README, INSTALL
+cask "qlvideo"                              # Preview video thumbnails
+cask "quicklook-csv"                        # CSV
+cask "quicknfo"                             # .nfo files
+cask "suspicious-package"                   # For .pkgs
+
+# Fonts
+tap 'homebrew/cask-fonts'
+cask "font-meslo-lg-nerd-font"
+cask "font-jetbrains-mono-nerd-font"
+
+# INSTALL MPV  with 60 fps###
+# https://www.reddit.com/r/osx/comments/4ljbdq/mpv_tutorial_and_60_fps_playback_on_os_x/
+brew "libass"
+brew "ffmpeg"
+cask "mpv"
+brew "mvtools"
+brew "ffms2"
+brew "subliminal"
+
+### Mac App Store Installs
+mas "NotePlan 3", id: 1505432629            # NotePlan 3 task & notes manager
+mas "Magnet", id: 441258766                 # Magnet workspace manager
+mas "Bitwarden", id: 1137397744             # Bitwarden password manager
+mas "Cleaner One", id: 1156773866           # Cleaner One from Trend Micro
+mas "eduVPN client", id: 1292557340         # VPN client from SURF for Research & Education 
+mas "Step Two", id: 1448916662              # OTP client for 2FA
+mas "radioNED+", id: 1446942851             # Streaming Radio app
+mas "Wipr", id: 1320666476                  # Extra strength blocking on a few stubborn websites. 
+mas "Ghostery", id: 1436953057              # Privacy Ad Blocker
+

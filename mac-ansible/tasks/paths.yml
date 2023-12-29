@@ -1,0 +1,40 @@
+---
+- name: Check for {{ binfiles_path }}
+  stat:
+    path: "{{ binfiles_path }}"
+  register: binfiles_dir
+  tags:
+    - paths
+
+- name: Create ~/.config dir
+  file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: "0755"
+  tags:
+    - paths
+
+- name: Create ~/tmp dir
+  file:
+    path: "{{ ansible_env.HOME }}/tmp"
+    state: directory
+    mode: "0755"
+  tags:
+    - paths
+
+- name: Create {{ git_local_path }} dir
+  file:
+    path: "{{ ansible_env.HOME }}/{{ git_local_path }}"
+    state: directory
+    mode: "0755"
+  tags:
+    - paths
+
+- name: Link ~/bin to {{ binfiles_path }} if it exists
+  file:
+    src: "{{ binfiles_path }}"
+    dest: "{{ ansible_env.HOME }}/bin"
+    state: link
+  when: binfiles_dir.stat.exists
+  tags:
+    - paths

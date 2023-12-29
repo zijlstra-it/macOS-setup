@@ -1,0 +1,50 @@
+---
+- name: Check for ZSH files
+  stat:
+    path: "{{ dotfiles_path }}/zsh/"
+  register: zshfiles
+  tags:
+    - zsh
+
+- name: Install Oh My ZSH
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  tags:
+    - zsh
+
+    # TODO: make themes and plugins a list variable and the task a loop over those lists
+    # TODO: replace oh-my-zsh with zsh-zap
+
+- name: Install Powerline10K theme
+  git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
+  tags:
+    - zsh
+
+- name: Install plugin you-should-use
+  git:
+    repo: "https://github.com/MichaelAquilina/zsh-you-should-use.git"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/you-should-use"
+  tags:
+    - zsh
+
+- name: Link ZSH files
+  block:
+    - name: Delete .{{ item }}
+      file:
+        path: "{{ ansible_env.HOME }}/.{{ item }}"
+        state: absent
+    - name: Create link for {{ item }}
+      file:
+        state: link
+        src: "{{ dotfiles_path }}/zsh/{{ item }}"
+        dest: "{{ ansible_env.HOME }}/.{{ item }}"
+  with_items:
+    - p10k.zsh
+    - zshrc
+  when:
+    - zshfiles.stat.exists
+  tags:
+    - zsh

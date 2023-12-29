@@ -1,0 +1,20 @@
+---
+- name: Clone single repo's to {{ git_local_path }}
+  block:
+    - name: Set fact
+      set_fact:
+        target_dir: "{{ git_local_path }}/{{ repo_item.split('/')[-1] }}"
+
+    - name: Create target directory
+      file:
+        path: "{{ target_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Clone repository
+      git:
+        repo: "{{ repo_item }}.git"
+        dest: "{{ target_dir }}"
+
+  tags:
+    - git

@@ -1,0 +1,10 @@
+---
+- name: Install dotfiles
+  include_tasks: install-dotfiles.yml
+  loop:
+    - "{{ dotfiles_path }}"
+    - "{{ cloudfiles_path }}/dotfiles"
+  loop_control:
+    loop_var: path_item
+  tags:
+    - dotfiles
