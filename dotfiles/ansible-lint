@@ -1,0 +1,31 @@
+# .ansible-lint
+exclude_paths:
+- .cache/
+- .gitlab/
+- .git/
+- .pytest_cache/
+- .vscode/
+- tests/
+
+warn_list:
+  - '201'  # Trailing whitespace
+  - '301'  # Commands should not change things if nothing needs doing
+  - '303'  # Using command rather than module
+  - '305'  # Use shell only when shell functionality is required
+  - '306'  # Shells that use pipes should set the pipefail option
+  - '401'  # Git checkouts must contain explicit version
+  - '404'  # Doesn't need a relative path in role
+  - '702'  # Tags must contain lowercase letters and digits only
+
+skip_list:
+  - '106'  # Role name {} does not match ``^[a-z][a-z0-9_]+$`` pattern
+  - '204'  # Lines should be no longer than 160 chars
+  - '503'  # Tasks that run when changed should likely be handlers
+  - experimental  # all rules tagged as experimental
+  - fqcn-builtins # don't complain about not using FQCN's for built-in functions
+  - yaml[truthy]
+  - jinja[spacing]  # Rule that looks inside jinja2 templates.
+  - name[casing]  # Rule for checking task and play names.
+  - yaml[colons]  # Violations reported by yamllint.
+  - yaml[indentation]  # Violations reported by yamllint.
+  - yaml[line-length]  # Violations reported by yamllint.

@@ -1,0 +1,55 @@
+---
+- name: Check for {{ path_item }}
+  stat:
+    path: "{{ path_item }}"
+  register: dotfiles_dir
+  tags:
+    - dotfiles
+
+- name: Install dotfiles from {{ path_item }}
+  block:
+    - name: List files and directories in {{ path_item }}
+      find:
+        paths: "{{ path_item }}"
+        file_type: any
+      register: file_list
+
+    - set_fact:
+        dotfile_list: "{{ file_list['files'] | map(attribute='path') | map('regex_replace','^.*/(.*)$','\\1') | list }}"
+
+    - name: Create symlinks to files in {{ path_item }}
+      file:
+        src: "{{ path_item }}/{{ item }}"
+        path: "{{ ansible_env.HOME }}/.{{ item }}"
+        state: link
+        force: true
+      with_items: "{{ dotfile_list }}"
+      when: item != "config"
+
+    - name: Create ~/.config if needed
+      file:
+        path: "{{ ansible_env.HOME }}/.config"
+        state: directory
+        mode: "0755"
+
+    - name: List files and directories in {{ path_item }}/config
+      find:
+        paths: "{{ path_item }}/config"
+        file_type: any
+      register: configdir_list
+
+    - set_fact:
+        configdir_dotfiles_list: "{{ configdir_list['files'] | map(attribute='path') | map('regex_replace','^.*/(.*)$','\\1') | list }}"
+
+    - name: Create symlinks to files and directories in {{ path_item }}/config
+      file:
+        src: "{{ path_item }}/config/{{ item }}"
+        path: "{{ ansible_env.HOME }}/.config/{{ item }}"
+        state: link
+        force: true
+      with_items: "{{ configdir_dotfiles_list }}"
+
+  tags:
+    - dotfiles
+  when:
+    - dotfiles_dir.stat.exists

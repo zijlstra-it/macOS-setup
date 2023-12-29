@@ -1,0 +1,45 @@
+[user]
+    name = Sander Zijlstra
+    email = sander@zijlstra.it
+
+[core]
+    excludesfile = ~/.gitignore
+    autocrlf = input
+    pager = less -FSRX
+    editor = vim
+
+[color]
+    branch = auto
+    diff = auto
+    status = auto
+    ui = auto
+
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+
+[color "diff"]
+    meta = yellow
+    frag = magenta bold
+    old = red bold
+    new = green bold
+
+[color "status"]
+    added = green
+    changed = yellow
+    untracked = red
+
+[alias]
+    prune-branches = !git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs git branch -D
+    checkout-main = !git branch -a | grep -E '(master|main)' | sed 's/^.*m/m/g' | head -1 | xargs git checkout && git pull && git prune-branches
+    checkout-prod = !git branch | grep prod | sed 's/^.*m/m/g' | tail -1 | xargs git checkout && git pull && git prune-branches
+    checkout-dev = !git branch | grep dev | sed 's/^.*m/m/g' | head -1 | xargs git checkout && git pull && git prune-branches
+  	uncommit = reset --soft HEAD~1
+    ammend= commit -v -a --amend
+    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --oneline
+    lo = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short --oneline
+    ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+    loh = !git log --decorate --oneline | head -1
+    lll = log -u
+    log-graph = log --decorate --oneline --graph

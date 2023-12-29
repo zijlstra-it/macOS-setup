@@ -1,0 +1,84 @@
+---
+- hosts: all
+  tasks:
+    - name: Debug info
+      debug:
+        msg: Check we are running in the directory of the script
+      failed_when: not ansible_env.PWD.endswith('/mac-ansible')
+
+- hosts: all
+  become: false
+
+  vars_files:
+    - default.config.yml
+
+  pre_tasks:
+    - name: Include custom configuration.
+      include_vars: "{{ item }}"
+      with_fileglob:
+        - "config.yml"
+      tags:
+        - always
+
+  tasks:
+    - name: macOS specific setting
+      script: scripts/macos-settings.sh
+      become: true
+      tags:
+        - macos-settings
+
+    - name: Create Paths I need
+      include_tasks: tasks/paths.yml
+      tags:
+        - paths
+
+    - name: Install core software
+      include_tasks: tasks/software.yml
+      tags:
+        - software
+
+    - name: Checkout dotfiles
+      include_tasks: tasks/dotfiles.yml
+      tags:
+        - dotfiles
+
+    - name: Setup SSH directory & files
+      include_tasks: tasks/ssh.yml
+      tags:
+        - ssh
+
+    - name: Install and setup Python & pyenv
+      include_tasks: tasks/python.yml
+      tags:
+        - python
+
+    - name: Setup Dock
+      include_tasks: tasks/dock.yml
+      tags:
+        - dock
+
+    - name: Miscellaneous config
+      include_tasks: tasks/misc.yml
+      tags:
+        - misc
+
+    - name: Checkout GIT repos
+      include_tasks: tasks/git-repos.yml
+      tags:
+        - git
+
+    - name: Configure file extensions
+      script: scripts/file-extensions.sh
+      tags:
+        - file-extensions
+
+  handlers:
+    - name: kill dock
+      command: killall Dock
+      tags:
+        - dock
+
+    - name: kill finder
+      command: killall Finder
+      tags:
+        - file-extensions

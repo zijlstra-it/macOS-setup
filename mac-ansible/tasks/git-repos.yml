@@ -1,0 +1,25 @@
+---
+- name: Check for git "{{ git_local_path }}"
+  stat:
+    path: "{{ git_local_path }}"
+  register: git_dir
+  tags:
+    - git
+
+- name: Clone single repo's
+  include_tasks: git-clone-repos.yml
+  loop: "{{ git_repos }}"
+  loop_control:
+    loop_var: repo_item
+  when: git_dir.stat.isdir
+  tags:
+    - git
+
+- name: Clone groups of repo's
+  include_tasks: git-clone-group-repos.yml
+  loop: "{{ git_group_repos }}"
+  loop_control:
+    loop_var: group_repo_item
+  when: git_dir.stat.isdir
+  tags:
+    - git

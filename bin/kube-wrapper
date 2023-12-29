@@ -1,0 +1,71 @@
+#!/bin/bash
+ 
+Clusters=`find . -name kubeconfig | xargs -I {} dirname {} | sed 's/\.\///'`
+
+function usage {
+    kubectl -h
+	echo ""
+	echo "-----------------------------------------"
+	echo "This is actually a custom kubectl wrapper"
+	echo "-----------------------------------------"
+	echo ""
+	echo "Usage: kubectl --cluster <cluster> <kubectl arguments>"
+	echo "Usage: kubectl --unhealthy"
+	echo "Usage: kubectl --list"
+}
+
+function list_clusters {
+    echo ""
+	echo "Available clusters:"
+	echo "-------------------"
+	for cluster in $Clusters; do
+	  echo "- $cluster"
+	done
+}
+
+function get_unhealthy {
+    for cluster in $Clusters; do
+      echo ""
+      echo "Cluster $cluster ... "
+      export KUBECONFIG=${cluster}/kubeconfig; kubectl get pods -A | egrep -ve "Running|Completed"
+    done
+}
+
+if [ $# = 0 ]; then
+	usage
+	exit 0
+else
+  case "$1" in
+    (--cluster)
+		ARG_CLUSTER=$2
+		shift 2
+		;;
+    (--list)
+		list_clusters
+		exit 0
+		;;
+    (--unhealthy)
+		get_unhealthy
+		exit 0
+		;;
+    (--help|-h)
+        usage
+        exit 0
+        ;;
+  esac
+fi
+
+for cluster in $Clusters; do
+   if [ -z $ARG_CLUSTER ]; then
+	  echo ""
+	  echo "Cluster $cluster ... "
+	  export KUBECONFIG=${cluster}/kubeconfig; kubectl $@
+   else
+	  check=`echo $cluster | grep $ARG_CLUSTER`
+	  if [ $? = 0 ]; then
+		echo ""
+		echo "Cluster $cluster ... "
+		export KUBECONFIG=${cluster}/kubeconfig; kubectl $@
+	  fi
+   fi
+done
