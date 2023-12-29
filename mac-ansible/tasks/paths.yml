@@ -1,0 +1,41 @@
+---
+
+- name: Check for binfiles
+  stat:
+    path: "{{ binfiles_path }}"
+  register: binfiles
+  tags:
+    - paths
+
+- name: Create ~/.ssh dir
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: '0755'
+  tags:
+    - paths
+
+- name: Create ~/git dir
+  file:
+    path: "{{ ansible_env.HOME }}/git"
+    state: directory
+    mode: '0755'
+  tags:
+    - paths
+
+- name: Create ~/tmp dir
+  file:
+    path: "{{ ansible_env.HOME }}/tmp"
+    state: directory
+    mode: '0755'
+  tags:
+    - paths
+
+- name: Link ~/bin
+  file:
+    src: "{{ binfiles_path }}"
+    dest: "{{ ansible_env.HOME }}/bin"
+    state: link
+  when: binfiles.stat.exists
+  tags:
+    - paths

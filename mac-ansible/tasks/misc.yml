@@ -1,0 +1,79 @@
+---
+
+- name: Check for ~/{{ config_files_dir }} directory
+  stat:
+    path: "{{ ansible_env.HOME }}/{{ config_files_dir }}"
+  register: check_files_dir
+  tags:
+    - misc
+
+- name: Check for ~/.ssh directory
+  stat:
+    path: "{{ ansible_env.HOME }}/.ssh"
+  register: check_ssh_dir
+  tags:
+    - misc
+
+- name: Delete ~/.ssh
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: absent
+  when:
+    - check_ssh_dir.stat.exists and check_ssh_dir.stat.islnk == False
+  tags:
+    - misc
+
+- name: Link ~/.ssh to ~/{{ config_files_dir }}/ssh_config directory
+  file:
+    state: link
+    src: "{{ ansible_env.HOME }}/{{ config_files_dir }}/ssh_config"
+    dest: "{{ ansible_env.HOME }}/.ssh"
+  when:
+    - check_files_dir.stat.exists and check_ssh_dir.stat.islnk == False
+  tags:
+    - misc
+
+- name: Check for ~/.gnupg directory
+  stat:
+    path: "{{ ansible_env.HOME }}/.gnupg"
+  register: check_gnupg_dir
+  tags:
+    - misc
+
+- name: Delete ~/.gnupg
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: absent
+  when:
+    - check_files_dir.stat.exists and check_gnupg_dir.stat.islnk == False
+  tags:
+    - misc
+
+- name: Link ~/.gnupg to ~/{{ config_files_dir }}/gnupg directory
+  file:
+    state: link
+    src: "{{ ansible_env.HOME }}/{{ config_files_dir }}/gnupg"
+    dest: "{{ ansible_env.HOME }}/.gnupg"
+  when:
+    - check_files_dir.stat.exists and check_gnupg_dir.stat.islnk == False
+  tags:
+    - misc
+
+- name: Create ~/.config/openstack if it doesn't exist
+  file:
+    state: directory
+    path: "{{ ansible_env.HOME }}/.config/openstack"
+    mode: "0755"
+  register: check_openstack_conf_dir
+  tags:
+    - misc
+
+- name: Link ~/.config/openstack/clouds.yaml ~/{{ config_files_dir }}/clouds.yaml
+  file:
+    state: link
+    src: "{{ ansible_env.HOME }}/{{ config_files_dir }}/clouds.yaml"
+    dest: "{{ ansible_env.HOME }}/.config/openstack/clouds.yaml"
+  when:
+    - check_files_dir.stat.exists and check_openstack_conf_dir.changed
+  tags:
+    - misc

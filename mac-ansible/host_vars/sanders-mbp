@@ -1,0 +1,26 @@
+
+pyenv_python_versions:
+# In precedence order
+- 3.9.7
+- 3.10.4
+
+pip_packages: []
+
+dock_apps:
+- /Applications/iTerm
+- /Applications/Safari
+- /System/Applications/Mail
+- /Applications/Visual Studio Code
+- /System/Applications/Notes
+- /System/Applications/Reminders
+- /System/Applications/Calendar
+- /System/Applications/Messages
+- /Applications/WhatsApp
+- /Applications/Bitwarden
+- /Applications/Authy Desktop
+- /System/Applications/Photos
+- /Applications/Spotify
+- /System/Applications/System Preferences
+
+dock_folders:
+- ~/Downloads

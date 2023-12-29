@@ -1,0 +1,78 @@
+--- x
+
+- hosts: all
+  connection: local
+  tasks:
+
+  - name: Debug info
+    debug:
+      msg: Check we are running in the directory of the script
+    failed_when: not ansible_env.PWD.endswith('/mac-ansible')
+
+- hosts: all
+  connection: local
+  become: false
+
+  vars:
+    dotfiles_path: "{{ ansible_env.HOME }}/surfdrive/macOS-setup/dotfiles"
+    binfiles_path: "{{ ansible_env.HOME }}/surfdrive/macOS-setup/bin"
+    config_files_dir: "{{ my_config_files_dir | default('surfdrive/rc-files') }}"
+
+
+  tasks:
+    - name: macOS specific setting -- idempotent
+      become: true
+      script: scripts/macos-settings.sh
+      tags:
+        - macos-settings
+
+    - name: Create Paths I need
+      include_tasks: tasks/paths.yml
+      tags:
+        - paths
+
+    - name: Install core software
+      include_tasks: tasks/software.yml
+      tags:
+        - software
+
+    - name: Setup Shell environment
+      include_tasks: tasks/shell.yml
+      tags:
+        - shell
+
+    - name: Setup Dock
+      include_tasks: tasks/dock.yml
+      tags:
+        - dock
+
+    - name: Install python
+      include_tasks: tasks/python.yml
+      tags:
+        - python
+
+    - name: Configure file extensions -- idempotent
+      script: scripts/file-extensions.sh
+      tags:
+        - file-extensions
+
+    - name: Miscellaneous config
+      include_tasks: tasks/misc.yml
+      tags:
+        - misc
+
+    - name: Checkout GIT repos
+      include_tasks: tasks/git-repos.yml
+      tags:
+        - git
+
+  handlers:
+    - name: kill dock
+      command: killall Dock
+      tags:
+        - dock
+
+    - name: kill finder
+      command: killall Finder
+      tags:
+        - file-extensions

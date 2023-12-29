@@ -1,0 +1,105 @@
+---
+
+- name: Set Git facts
+  set_fact:
+    git_url: "https://git.ia.surfsara.nl/"
+    git_local_path: "{{ ansible_env.HOME }}/git"
+  tags:
+    - git
+
+- name: Check for local git path
+  stat:
+    path: "{{ git_local_path }}"
+  register: gitpath
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - Python projects
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/python/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/python/apollo-reporting
+    - DDP-Openstack/python/daphne-reporting
+    - DDP-Openstack/python/useful-scripts
+  when: gitpath.stat.exists
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - Terraform projects
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/terraform/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/terraform/modules
+    - DDP-Openstack/terraform/kolla-testbed
+    - DDP-Openstack/terraform/development-cluster
+    - DDP-Openstack/terraform/prod-01-cluster
+    - DDP-Openstack/terraform/prod-02-cluster
+    - DDP-Openstack/terraform/service-01-cluster
+    - DDP-Openstack/terraform/staging-cluster
+  when: gitpath.stat.exists
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - domains_and_projects
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/domains_and_projects/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/domains_and_projects/daphne
+    - DDP-Openstack/domains_and_projects/daphne-02
+    - DDP-Openstack/domains_and_projects/daphne-svc-01
+    - DDP-Openstack/domains_and_projects/daphne-test
+    - DDP-Openstack/domains_and_projects/gina
+    - DDP-Openstack/domains_and_projects/hpc
+    - DDP-Openstack/domains_and_projects/hpc-02
+    - DDP-Openstack/domains_and_projects/htp
+    - DDP-Openstack/domains_and_projects/internal-services
+    - DDP-Openstack/domains_and_projects/ms4
+    - DDP-Openstack/domains_and_projects/project-tools
+    - DDP-Openstack/domains_and_projects/sda
+  when: gitpath.stat.exists
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - ansible_inventories
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/ansible_inventories/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/ansible-inventories/apollo
+    - DDP-Openstack/ansible-inventories/development
+    - DDP-Openstack/ansible-inventories/production-01
+    - DDP-Openstack/ansible-inventories/production-02
+    - DDP-Openstack/ansible-inventories/scripts
+    - DDP-Openstack/ansible-inventories/service-01
+    - DDP-Openstack/ansible-inventories/staging
+  when: gitpath.stat.exists
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - Kolla
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/kolla/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/kolla/kolla-ansible
+    - DDP-Openstack/kolla/kolla-containers
+  when: gitpath.stat.exists
+  tags:
+    - git
+
+- name: Clone Gitlab Repo's - Various
+  git:
+    repo: "{{ git_url }}/{{ item }}.git"
+    dest: "{{ git_local_path }}/{{ item.split('/')[-1] }}"
+  loop:
+    - DDP-Openstack/ansible-sync
+    - DDP-Openstack/ceph-ansible
+    - DDP-Openstack/cmt-inventory
+    - DDP-Openstack/daphne-rally
+    - DDP-Openstack/os-provisioning
+  when: gitpath.stat.exists
+  tags:
+    - git

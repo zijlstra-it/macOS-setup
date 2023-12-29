@@ -1,0 +1,90 @@
+---
+- name: Check for dotfiles
+  stat:
+    path: "{{ dotfiles_path }}"
+  register: dotfiles
+  tags:
+    - shell
+
+- name: Check for ZSH files
+  stat:
+    path: "{{ dotfiles_path }}/zsh/zshrc"
+  register: zshfiles
+  when:
+    - dotfiles.stat.exists
+  tags:
+    - shell
+
+- name: Ensure dotfiles setup is executable
+  file:
+    path: "{{ dotfiles_path }}/install.sh"
+    mode: ug+x
+  when:
+    - dotfiles.stat.exists
+  tags:
+    - shell
+
+- name: Install dotfiles
+  shell: "./install.sh >> /tmp/mac-ansible.log"
+  args:
+    chdir: "{{ dotfiles_path }}"
+  when:
+    - dotfiles.stat.exists
+  tags:
+    - shell
+
+- name: Install Oh My ZSH
+  shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+  args:
+    creates: "{{ ansible_env.HOME }}/.oh-my-zsh"
+  tags:
+    - shell
+
+    #
+    # TODO: make themes and plugins a list variable and the task a loop over those lists
+    #
+- name: Install Powerline10K theme
+  git:
+    repo: "https://github.com/romkatv/powerlevel10k.git"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/themes/powerlevel10k"
+  tags:
+    - shell
+
+- name: Install plugin you-should-use
+  git:
+    repo: "https://github.com/MichaelAquilina/zsh-you-should-use.git"
+    dest: "{{ ansible_env.HOME }}/.oh-my-zsh/custom/plugins/you-should-use"
+  tags:
+    - shell
+
+- name: Delete .zshrc
+  file:
+    path: "{{ ansible_env.HOME }}/.zshrc"
+    state: absent
+  when:
+    - zshfiles.stat.exists and zshfiles.stat.islnk == False
+  tags:
+    - shell
+
+- name: Link .zsh directory
+  file:
+    state: link
+    src: "{{ dotfiles_path }}/zsh"
+    dest: "{{ ansible_env.HOME }}/.zsh"
+  when:
+    - zshfiles.stat.exists and zshfiles.stat.islnk == False
+  tags:
+    - shell
+
+- name: Link ZSH files
+  file:
+    state: link
+    src: "{{ dotfiles_path }}/zsh/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.{{ item }}"
+  with_items:
+    - p10k.zsh
+    - zshrc
+  when:
+    - zshfiles.stat.exists
+  tags:
+    - shell

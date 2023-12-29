@@ -1,0 +1,34 @@
+
+pyenv_python_versions:
+# In precedence order
+- 3.9.7
+- 3.10.4
+
+pip_packages: []
+
+dock_apps:
+- /Applications/iTerm
+- /Applications/Safari
+- /Applications/Firefox
+- /System/Applications/Mail
+- /Applications/Visual Studio Code
+- /System/Applications/Notes
+- /System/Applications/Reminders
+- /System/Applications/Calendar
+- /Applications/Noteplan 3
+- /System/Applications/Messages
+- /Applications/WhatsApp
+- /Applications/Element
+- /Applications/Microsoft Teams
+- /Applications/Bitwarden
+- /Applications/Entrust Soft Token
+- /Applications/Authy Desktop
+- /Applications/Microsoft Word
+- /Applications/Microsoft Powerpoint
+- /Applications/Microsoft Excel
+- /System/Applications/Photos
+- /Applications/Spotify
+- /System/Applications/System Preferences
+
+dock_folders:
+- ~/Downloads

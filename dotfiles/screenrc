@@ -1,0 +1,10 @@
+# always read the login rc files
+shell -$SHELL
+# shell history and buffer
+defscrollback 10000
+# start 3 windows by default starting from 1
+screen    -t $         1
+screen    -t $         2
+screen    -t $         3
+# the status line with proper information
+hardstatus alwayslastline '%{= kg}[ %{G}%H %{g}][%= %{= kB}%?%-Lw%?%{+b r}(%{G}%n*%f %t%?(%u)%?%{r})%{-b B}%?%+Lw%?%?%= %{g}%]'

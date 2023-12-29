@@ -1,0 +1,35 @@
+---
+dotfiles_path: "{{ playbook_dir | replace('mac-ansible', '') }}/dotfiles"
+binfiles_path: "{{ playbook_dir | replace('mac-ansible', '') }}/bin"
+rcfiles_path: "{{ ansible_env.HOME }}/owncloud/rc-files"
+
+pyenv_python_versions:
+  # In precedence order
+  - 3.9.7
+  - 3.10.4
+
+pip_packages: []
+
+dock_apps:
+  - /Applications/iTerm
+  - /Applications/Safari
+  - /Applications/Firefox
+  - /System/Applications/Mail
+  - /System/Applications/Notes
+  - /System/Applications/Reminders
+  - /System/Applications/Calendar
+  - /Applications/Noteplan 3
+  - /System/Applications/Messages
+  - /Applications/WhatsApp
+  - /Applications/Element
+  - /Applications/Microsoft Teams
+  - /Applications/Bitwarden
+  - /Applications/Microsoft Word
+  - /Applications/Microsoft Powerpoint
+  - /Applications/Microsoft Excel
+  - /System/Applications/Photos
+  - /Applications/Spotify
+  - /System/Applications/System Preferences
+
+dock_folders:
+  - ~/Downloads
