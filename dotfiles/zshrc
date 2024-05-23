@@ -33,6 +33,7 @@ zinit light Aloxaf/fzf-tab
 zinit light MichaelAquilina/zsh-you-should-use
 
 # Add in snippets
+zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit snippet OMZP::kubectl
 zinit snippet OMZP::command-not-found
