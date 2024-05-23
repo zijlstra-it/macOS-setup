@@ -1,0 +1,10 @@
+TODO.md
+.DS_Store
+.*.sw?
+Thumbs.db
+*.orig
+.vscode
+.python-version
+Pipfile.lock
+config.yml
+

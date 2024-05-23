@@ -1,0 +1,11 @@
+---
+- name: Set Hostname to {{ my_hostname }}
+  shell: "scutil --set {{ item }} {{ my_hostname }}"
+  become: true
+  loop:
+    - ComputerName
+    - HostName
+    - LocalHostName
+  when: set_hostname
+  tags:
+    - misc

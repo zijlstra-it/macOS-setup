@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+import sys
+from jinja2 import Environment
+
+def main():
+    args_count = len(sys.argv[1:])
+
+    if args_count == 1:
+        env = Environment()
+        with open(sys.argv[1]) as template:
+           env.parse(template.read())
+    else:
+        print(
+        '''
+        Usage: test-jinja <path-to-template> 
+        '''
+        )
+        sys.exit(0)
+
+if __name__ == "__main__":
+    main()

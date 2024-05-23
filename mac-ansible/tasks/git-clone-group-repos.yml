@@ -1,0 +1,21 @@
+---
+- name: Clone groups of repo's to {{ git_local_path }}
+  block:
+    - name: Set fact
+      set_fact:
+        group_dir: "{{ git_local_path }}/{{ group_repo_item.url.split('/')[-2] }}"
+
+    - name: Create target directory
+      file:
+        path: "{{ group_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Clone repositories from {{ group_repo_item.url }}
+      git:
+        repo: "{{ group_repo_item.url }}/{{ item }}.git"
+        dest: "{{ group_dir }}/{{ item }}/"
+      loop: "{{ group_repo_item.repos }}"
+
+  tags:
+    - git

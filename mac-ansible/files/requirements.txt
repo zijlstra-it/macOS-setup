@@ -1,0 +1,15 @@
+ansible
+ansible-lint
+autopep8
+click
+click-spinner
+itomate
+flake8
+pep8
+pycrypto
+pylint
+pytest
+pyyaml
+requests
+sacred
+typer

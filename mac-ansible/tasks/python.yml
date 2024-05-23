@@ -1,0 +1,82 @@
+---
+- name: Install pyenv and python dependencies
+  homebrew:
+    name:
+      - pyenv
+      - openssl
+      - readline
+      - sqlite3
+      - xz
+      - zlib
+    state: present
+  tags:
+    - python
+
+# If pyenv fails, check https://github.com/pyenv/pyenv/wiki/Common-build-problems#build-failed-error-the-python-zlib-extension-was-not-compiled-missing-the-zlib
+- name: python versions
+  #command: "pyenv install {{ item }} >> /tmp/mac-ansible.log"
+  command: "pyenv install {{ item }}"
+  register: pyenv_install_result
+  ignore_errors: true
+  #failed_when: >
+  #  pyenv_install_result.rc != 0 and pyenv_install_result.stderr != ["pyenv: ansible_env.HOME/.pyenv/versions/ " + item + " already exists"]
+  loop: "{{ pyenv_python_versions }}"
+  tags:
+    - python
+
+- name: python versions active
+  command: pyenv global {{ pyenv_python_versions[0] }}
+  tags:
+    - python
+
+- name: python versions shims rehashed
+  # Needs running after every update of pyenv, at least, to fix the pyenv shims
+  command: pyenv rehash
+  tags:
+    - python
+
+- name: python versions latest pip, and pip-tools
+  pip:
+    name:
+      - pip
+      - pip-tools
+    state: latest
+    executable: "{{ ansible_env.HOME }}/.pyenv/versions/{{ item }}/bin/pip"
+  environment:
+    PIP_REQUIRE_VIRTUALENV: ""
+  loop: "{{ pyenv_python_versions }}"
+  tags:
+    - python
+
+- name: Copy requirements to ~tmp
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}/tmp"
+    mode: "0644"
+  with_fileglob:
+    - "requirements*"
+  tags:
+    - python
+
+- name: Install pip packages on first env
+  pip:
+    requirements: "{{ ansible_env.HOME }}/tmp/requirements.txt"
+    state: latest
+    executable: "{{ ansible_env.HOME }}/.pyenv/versions/{{ pyenv_python_versions[0] }}/bin/pip"
+  environment:
+    PIP_REQUIRE_VIRTUALENV: ""
+  ignore_errors: true
+  tags:
+    - python
+# - name: Create virtual environments
+#   pip:
+#     requirements: "{{ ansible_env.HOME }}/requirements-{{ item }}.txt"
+#     virtualenv: "{{ item }}"
+#     virtualenv_command: pyenv
+#   command: pyenv virtualenv {{ item }}
+#   loop:
+#     - openstack
+#     - ansible-2.9.7
+#     - daphne-rally
+#   tags:
+#     - python

@@ -1,0 +1,41 @@
+---
+my_hostname: "sanderz-mac"
+set_hostname: False
+
+binfiles_path: "{{ playbook_dir | replace('mac-ansible', 'bin') }}"
+dotfiles_path: "{{ playbook_dir | replace('mac-ansible', 'dotfiles') }}"
+cloudfiles_path: "{{ ansible_env.HOME }}/surfdrive/macOS-setup/sanders-macbookpro"
+
+neovim_custom_config_repo: "https://www.github.com/zijlstra-it/nvchad-custom.git"
+
+pyenv_python_versions:
+  - 3.10.4
+
+pip_packages: []
+
+dock_apps:
+  - /Applications/iTerm
+  - /Applications/Safari
+  - /System/Applications/Mail
+  - /System/Applications/Notes
+  - /System/Applications/Reminders
+  - /System/Applications/Calendar
+  - /System/Applications/Messages
+  - /Applications/WhatsApp
+  - /Applications/Bitwarden
+  - /System/Applications/Photos
+  - /Applications/Spotify
+  - /System/Applications/System Preferences
+dock_folders:
+  - ~/Downloads
+
+git_local_path: "{{ ansible_env.HOME }}/git"
+git_group_repos:
+  - url: https://www.github.com/zijlstra-it/
+    repos:
+      - CKAD-exercises
+      - dotfiles
+      - nvchad-custom
+git_repos:
+  - https://github.com/zdharma-continuum/zinit
+  - https://www.github.com/NvChad/NvChad
