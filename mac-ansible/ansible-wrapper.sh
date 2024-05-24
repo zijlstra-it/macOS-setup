@@ -10,7 +10,7 @@ fi
 # To use just redirect output with append to the log file `>> /tmp/mac-ansible.log`
 touch /tmp/mac-ansible.log && tail -f /tmp/mac-ansible.log &
 
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
+# Keep-alive: update existing `sudo` time stamp until finished
 while true; do
 	sudo -n true
 	sleep 60
@@ -20,7 +20,6 @@ done 2>/dev/null &
 caffeinate &    # Prevent mac from sleeping
 caffeinate -d & # Prevent display from sleeping
 
-# unbuffer preserves color codes
 if [[ -z $1 ]]; then
 	ansible-playbook main.yml --ask-become-pass --limit localhost
 else
@@ -29,4 +28,3 @@ fi
 
 kill %1
 killall caffeinate
-#rm /tmp/mac-ansible.log
