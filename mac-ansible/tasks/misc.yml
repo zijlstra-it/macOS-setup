@@ -8,4 +8,24 @@
     - LocalHostName
   when: set_hostname
   tags:
+    - hostname
+    - misc
+
+- name: Check for ~/bin/cron.sh
+  stat:
+    path: "{{ ansible_env.HOME }}/bin/cron.sh"
+  register: cron_file
+  tags:
+    - crontab
+    - misc
+
+- name: Install personal crontab (Monthly only for now)
+  cron:
+    name: "Update & clean brew installed software"
+    special_time: monthly
+    job: "{{ ansible_env.HOME }}/bin/cron.sh"
+  when:
+    - cron_file.stat.exists
+  tags:
+    - crontab
     - misc

@@ -29,7 +29,7 @@ dock_apps:
 dock_folders:
   - ~/Downloads
 
-git_local_path: "{{ ansible_env.HOME }}/git"
+git_local_path: "git"
 git_group_repos:
   - url: https://www.github.com/zijlstra-it/
     repos:

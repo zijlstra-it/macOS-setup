@@ -24,7 +24,7 @@ caffeinate -d & # Prevent display from sleeping
 if [[ -z $1 ]]; then
 	ansible-playbook main.yml --ask-become-pass --limit localhost
 else
-	ansible-playbook main.yml --ask-become-pass --limit localhost --tags $1
+	ansible-playbook main.yml --ask-become-pass --limit localhost --tags "$@"
 fi
 
 kill %1
