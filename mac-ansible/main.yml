@@ -57,15 +57,15 @@
       tags:
         - dock
 
-    - name: Miscellaneous config
-      include_tasks: tasks/misc.yml
-      tags:
-        - misc
-
     - name: Checkout GIT repos
       include_tasks: tasks/git-repos.yml
       tags:
         - git
+
+    - name: Miscellaneous config
+      include_tasks: tasks/misc.yml
+      tags:
+        - misc
 
     - name: Configure file extensions
       script: scripts/file-extensions.sh

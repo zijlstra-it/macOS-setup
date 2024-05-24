@@ -9,11 +9,13 @@ The Ansible code does, in order:
 - Configure settings for MacOS, see `mac-ansible/scripts/macos-settings.sh`
 - Setup a few standard paths I use; `~/git`, `~/tmp` and `~/bin`.
 - Installs a set of applications using brew, see `mac-ansible/files/brewfile` for the full list.
+- Install NeoVim and some dependancies and checkout the NeoVim config repository to `~/.config/nvim`
 - Install dotfiles for various software configurations.
 - Sets up SSH keys if a private `{{ cloudfiles_path }}/ssh_config` directory is not found.
 - Sets up Python and pyenv with a default virtual environment.
 - Configures the MacOS dock
 - Clones a list of git repo's if defined.
+- Miscellaneous stuff like hostname, a crontab script etc.
 - Configures file extentions (currently none defined btw)
 
 ## Installation
