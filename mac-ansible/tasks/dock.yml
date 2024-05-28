@@ -22,7 +22,7 @@
     - dock
 
 - name: "Add Apps folder to dock"
-  command: "dockutil --add /Applications --view grid --display folder --section others"
+  command: 'dockutil --add "/Applications" --view grid --display folder --section others'
   notify:
     - kill dock
   tags:

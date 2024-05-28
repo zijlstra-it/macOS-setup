@@ -25,9 +25,9 @@ dock_apps:
   - /Applications/Bitwarden
   - /System/Applications/Photos
   - /Applications/Spotify
-  - /System/Applications/System Preferences
+  - /System/Applications/System Settings
 dock_folders:
-  - ~/Downloads
+  - "{{ ansible_env.HOME }}/Downloads"
 
 git_local_path: "git"
 git_group_repos:
