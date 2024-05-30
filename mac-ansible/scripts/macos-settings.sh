@@ -256,7 +256,7 @@ defaults write com.apple.dock show-process-indicators -bool true
 defaults write com.apple.dock magnification -int 1
 
 # No hide delay
-defaults write com.apple.dock autohide-delay -float 0 
+defaults write com.apple.dock autohide-delay -float 1
 defaults write com.apple.dock autohide-time-modifier -float 0.4
 
 # Add a spacer to the left side of the Dock (where the applications are)
@@ -488,7 +488,7 @@ defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 echo "Restarting affected applications"
 
 for app in "Activity Monitor" "Dashboard" "Dock" "Finder" "SystemUIServer" "Terminal" "Mail" "iTunes"; do
-  killall "$app" > /dev/null 2>&1
+	killall "$app" >/dev/null 2>&1
 done
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
