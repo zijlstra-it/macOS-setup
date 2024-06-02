@@ -72,8 +72,8 @@ return {
 
 	-- Keybindings
 	keys = {
-		{ key = "|", mods = "CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
-		{ key = "-", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "-", mods = "CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
+		{ key = "|", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
 		{
 			key = ",",
 			mods = "CMD",
