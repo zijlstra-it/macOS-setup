@@ -256,7 +256,7 @@ defaults write com.apple.dock show-process-indicators -bool true
 defaults write com.apple.dock magnification -int 1
 
 # No hide delay
-defaults write com.apple.dock autohide-delay -float 1
+defaults write com.apple.dock autohide-delay -float 0
 defaults write com.apple.dock autohide-time-modifier -float 0.4
 
 # Add a spacer to the left side of the Dock (where the applications are)
@@ -404,25 +404,25 @@ defaults write com.apple.mail DisableInlineAttachmentViewing -bool true
 # Terminal & iTerm2
 # -----------------------------------------------------------------------------
 
-echo "Setting Terminal & iTerm2 preferences"
-
-# Only use UTF-8 in Terminal.app
-defaults write com.apple.terminal StringEncodings -array 4
-
-# Enable “focus follows mouse” for Terminal.app and all X11 apps
-# i.e. hover over a window and start typing in it without clicking first
-defaults write com.apple.terminal FocusFollowsMouse -bool true
-defaults write org.x.X11 wm_ffm -bool true
-
-# Enable Secure Keyboard Entry in Terminal.app
-# See: https://security.stackexchange.com/a/47786/8918
-defaults write com.apple.terminal SecureKeyboardEntry -bool true
-
-# Don’t display the annoying prompt when quitting iTerm
-defaults write com.googlecode.iterm2 PromptOnQuit -bool false
-
-# Install the Cobalt2 theme for iTerm
-open "~/git/dorfiles/files/iterm/cobalt2.itermcolors"
+# # echo "Setting Terminal & iTerm2 preferences"
+#
+# # Only use UTF-8 in Terminal.app
+# defaults write com.apple.terminal StringEncodings -array 4
+#
+# # Enable “focus follows mouse” for Terminal.app and all X11 apps
+# # i.e. hover over a window and start typing in it without clicking first
+# defaults write com.apple.terminal FocusFollowsMouse -bool true
+# defaults write org.x.X11 wm_ffm -bool true
+#
+# # Enable Secure Keyboard Entry in Terminal.app
+# # See: https://security.stackexchange.com/a/47786/8918
+# defaults write com.apple.terminal SecureKeyboardEntry -bool true
+#
+# # Don’t display the annoying prompt when quitting iTerm
+# defaults write com.googlecode.iterm2 PromptOnQuit -bool false
+#
+# # Install the Cobalt2 theme for iTerm
+# open "$HOME/git/dotfiles/files/iterm/cobalt2.itermcolors"
 
 # -----------------------------------------------------------------------------
 # OTHER
