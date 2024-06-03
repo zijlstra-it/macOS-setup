@@ -32,7 +32,6 @@ brew "ssh-copy-id"
 
 ### SHELLS, GIT, PYTHON and RUBY
 brew "git"
-brew "git-extras"                           # Extra commands for convenience
 brew "git-crypt"                            # Enables secretfiles
 
 ### PROGRAMMING LANGUAGES
@@ -70,7 +69,6 @@ brew "unison"                               # Sync both ways folders
 brew "wdiff"                                # Word by word diff
 brew "yamllint"                             # YAML Linter
 brew "eza"                                  # Modern replacement for 'ls'
-brew "battery"                              # CLI for managing the battery charging status
 
 ##### Other #####
 brew "koekeishiya/formulae/skhd"            # Simple hotkey manager
@@ -98,7 +96,6 @@ cask "element"                              # Matrix chat client
 cask "firefox"                              # Alternative web browser
 cask "gpg-suite"                            # GPG Suite
 cask "google-chrome"                        # Google's web browser
-cask "iterm2"                               # Better than Terminal.app
 cask "karabiner-elements"                   # Tool to remap keys like caps-lock
 cask "onyx"                                 # Tweak tool for OS
 cask "spotify"                              # Music streaming
@@ -108,14 +105,12 @@ cask "skype"                                # Video calls
 cask "the-unarchiver"                       # To deflate and decompress files
 cask "utm"                                  # Virtual machines UI using QEMU
 cask "veracrypt"                            # Disk and disk image encryption
-cask "visual-studio-code"                   # Visual Studio Code editor
 cask "vlc"                                  # Video Player
 cask "whatsapp"                             # WhatsApp
 cask "xquartz"                              # X11 server
 cask "zoom"                                 # Zoom.us video conference software
 cask "drawio"                               # Draw.io is free online diagram softwar
 cask "logi-options-plus"                    # Software for Logitech devices
-cask "drivedx"                              # Drive health diagnostic & monitoring tool
 
 # Quick Look plugins
 cask "glance"                               # Wide array of code, json, md, tsv,...
