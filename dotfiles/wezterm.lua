@@ -74,6 +74,9 @@ return {
 	keys = {
 		{ key = "-", mods = "CMD", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
 		{ key = "|", mods = "CMD", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
+		{ key = "+", mods = "CTRL", action = act.IncreaseFontSize },
+		{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
+		{ key = "0", mods = "CTRL", action = act.ResetFontSize },
 		{
 			key = ",",
 			mods = "CMD",
