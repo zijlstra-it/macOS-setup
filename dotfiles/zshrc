@@ -89,3 +89,5 @@ fi
 # Shell integrations
 eval "$(fzf --zsh)"
 
+# Enable VI mode
+set -o vi
