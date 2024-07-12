@@ -1,6 +1,11 @@
 #!/bin/bash
-
 set -x
+
+# Helper function
+exists()
+{
+  command -v "$1" >/dev/null 2>&1
+}
 
 cd scripts
 
@@ -33,7 +38,9 @@ set -o pipefail # Exit on pipe error
 chmod +x *.sh
 
 # Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+if ! exists brew ; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+fi
 brew update
 
 # Allow third party software
