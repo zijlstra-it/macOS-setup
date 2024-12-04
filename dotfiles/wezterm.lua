@@ -2,7 +2,7 @@ local wezterm = require("wezterm")
 local act = wezterm.action
 
 return {
-	default_prog = { "/bin/zsh", "-l" },
+	default_prog = { "/bin/zsh" },
 	window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 
 	color_scheme = "tokyonight",
@@ -86,7 +86,7 @@ return {
 					TERM = "screen-256color",
 				},
 				args = {
-					"/usr/local/opt/neovim/bin/nvim",
+					"/opt/homebrew/bin/nvim",
 					os.getenv("WEZTERM_CONFIG_FILE"),
 				},
 			}),

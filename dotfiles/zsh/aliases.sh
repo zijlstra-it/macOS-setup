@@ -33,7 +33,7 @@ else
 fi
 
 if exists nvim; then
-  alias vi='nvim'
+  alias vi='nvim $@'
   alias vimdiff='nvim -d'
 else
   alias vimdiff='vi -d'

@@ -22,3 +22,16 @@ export HOMEBREW_NO_GOOGLE_ANALYTICS=1
 
 # Exa/Eza colors
 export EXA_COLORS="uu=33:gu=33:ur=33:uw=31:ux=32:ue=32:sn=32:da=36:xx=37"
+
+# Brew
+if [[ -f "/opt/homebrew/bin/brew" ]] then
+  # If you're using macOS, you'll want this enabled
+  # eval "$(/opt/homebrew/bin/brew shellenv)"
+  export HOMEBREW_PREFIX="/opt/homebrew";
+  export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+  export HOMEBREW_REPOSITORY="/opt/homebrew";
+  export PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}";
+  export MANPATH="/opt/homebrew/share/man${MANPATH+:$MANPATH}:";
+  export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}";
+fi
+
