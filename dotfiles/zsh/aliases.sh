@@ -20,6 +20,7 @@ fi
 if exists eza; then
   alias ls='eza --icons=auto' 
   alias ll='eza --icons=auto -g -l --git -b --octal-permissions'
+  alias lh='eza --icons=auto -g -l --git -b --octal-permissions'
   alias ltr='eza --icons=auto -g -l --git -b --octal-permissions --tree --level=3'
   alias la='eza --icons=auto -g -l -a -b --git --octal-permissions'
   alias lt='eza --icons=auto -g -l -b --git --sort=modified --octal-permissions'
@@ -28,6 +29,7 @@ if exists eza; then
 else
   alias ls='ls -G'
   alias ll='ls -l'
+  alias lh='ls -lh'
   alias la='ls -la'
   alias lt='ls -ltr'
 fi
