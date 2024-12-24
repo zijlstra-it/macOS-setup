@@ -16,6 +16,7 @@ warn_list:
   - '401'  # Git checkouts must contain explicit version
   - '404'  # Doesn't need a relative path in role
   - '702'  # Tags must contain lowercase letters and digits only
+  - role-name
 
 skip_list:
   - '106'  # Role name {} does not match ``^[a-z][a-z0-9_]+$`` pattern
@@ -29,3 +30,4 @@ skip_list:
   - yaml[colons]  # Violations reported by yamllint.
   - yaml[indentation]  # Violations reported by yamllint.
   - yaml[line-length]  # Violations reported by yamllint.
+  - role-name
