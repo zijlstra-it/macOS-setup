@@ -73,7 +73,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 [[ ! -f ${HOME}/.zsh/aliases.sh ]] || source ${HOME}/.zsh/aliases.sh
 [[ ! -f ${HOME}/.zsh/env.sh ]] || source ${HOME}/.zsh/env.sh
 [[ ! -f ${HOME}/.zsh/paths.sh ]] || source ${HOME}/.zsh/paths.sh
-[[ ! -f ${HOME}/.zsh/pyenv.sh ]] || source ${HOME}/.zsh/pyenv.sh
 [[ ! -f ${HOME}/.zsh/functions.sh ]] || source ${HOME}/.zsh/functions.sh
 
 # Environment stuff not to be put into Git
