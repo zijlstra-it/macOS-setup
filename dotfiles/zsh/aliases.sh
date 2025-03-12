@@ -1,17 +1,13 @@
 # macOS-setup/dotfiles/zsh/aliases.sh
 
-# helper function 
-exists()
-{
-  command -v "$1" >/dev/null 2>&1
-}
-
 # start of aliases
 alias rm='rm -i'
 alias zsh-reload=". ~/.zshrc && echo 'ZSH config reloaded from ~/.zshrc'"
 alias cl='clear'
 alias q='exit'
 alias bwlogin='bw login --apikey'
+alias t='tree'
+alias l='ll'
 
 if [ -f ~/bin/ssh-or-copy-id.sh ]; then
   alias ssh='~/bin/ssh-or-copy-id.sh'
@@ -37,6 +33,7 @@ fi
 if exists nvim; then
   alias vi='nvim $@'
   alias vimdiff='nvim -d'
+  export EDITOR=nvim
 else
   alias vimdiff='vi -d'
 fi

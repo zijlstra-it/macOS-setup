@@ -77,6 +77,7 @@ return {
 		{ key = "+", mods = "CTRL", action = act.IncreaseFontSize },
 		{ key = "-", mods = "CTRL", action = act.DecreaseFontSize },
 		{ key = "0", mods = "CTRL", action = act.ResetFontSize },
+		{ key = "t", mods = "CMD", action = { SpawnCommandInNewTab = { cwd = wezterm.home_dir } } },
 		{
 			key = ",",
 			mods = "CMD",

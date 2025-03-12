@@ -1,3 +1,6 @@
+# To enable profiling uncomment the following line
+# zmodload zsh/zprof
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -31,12 +34,12 @@ zinit light MichaelAquilina/zsh-you-should-use
 zinit snippet OMZL::git.zsh
 zinit snippet OMZP::git
 zinit snippet OMZP::git-prompt
-zinit snippet OMZP::kubectl
 zinit snippet OMZP::command-not-found
 
 # Completion for Brew based programs
 if type brew &>/dev/null; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    #FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+    FPATH="/opt/homebrew/share/zsh/site-functions:${FPATH}"
 fi
 
 # Load completions
@@ -51,7 +54,7 @@ zinit cdreplay -q
 bindkey '\' autosuggest-accept
 
 # History
-HISTSIZE=10000
+HISTSIZE=100000
 HISTFILE=~/.zsh_history
 SAVEHIST=$HISTSIZE
 HISTDUP=erase
@@ -70,10 +73,10 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 
 # Personal stuff
+[[ ! -f ${HOME}/.zsh/functions.sh ]] || source ${HOME}/.zsh/functions.sh
 [[ ! -f ${HOME}/.zsh/aliases.sh ]] || source ${HOME}/.zsh/aliases.sh
 [[ ! -f ${HOME}/.zsh/env.sh ]] || source ${HOME}/.zsh/env.sh
 [[ ! -f ${HOME}/.zsh/paths.sh ]] || source ${HOME}/.zsh/paths.sh
-[[ ! -f ${HOME}/.zsh/functions.sh ]] || source ${HOME}/.zsh/functions.sh
 
 # Environment stuff not to be put into Git
 [[ ! -f ${HOME}/.zsh_private_profile ]] || source ${HOME}/.zsh_private_profile

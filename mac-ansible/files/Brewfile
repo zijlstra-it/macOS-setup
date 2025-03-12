@@ -136,7 +136,7 @@ brew "ffms2"
 brew "subliminal"
 
 ### Mac App Store Installs
-mas "NotePlan 3", id: 1505432629            # NotePlan 3 task & notes manager
+# mas "NotePlan 3", id: 1505432629            # NotePlan 3 task & notes manager
 mas "Magnet", id: 441258766                 # Magnet workspace manager
 mas "Bitwarden", id: 1137397744             # Bitwarden password manager
 mas "Cleaner One", id: 1156773866           # Cleaner One from Trend Micro
