@@ -28,3 +28,8 @@ function y() {
   fi
   rm -f -- "$tmp"
 }
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd() {
+  export GPG_TTY=$(tty)
+}
