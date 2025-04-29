@@ -51,7 +51,7 @@ zinit cdreplay -q
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Keybindings
-bindkey '\' autosuggest-accept
+bindkey '^\' autosuggest-accept
 
 # History
 HISTSIZE=100000
